@@ -1,23 +1,36 @@
 import { useState } from "react";
 
-export default function AddTodoList({ onAddTodoList }) {
+export default function AddToDo({ todos, setTodo, onAddTodo }) {
   const [title, setTitle] = useState("");
-
   return (
     <>
       <input
-        placeholder="Add list"
+        placeholder="Add todo list"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />{" "}
       <button
         onClick={() => {
           setTitle("");
-          onAddTodoList(title);
+          onAddTodo(title);
         }}
       >
         Add
       </button>
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            {todo.title} <button>Edit</button>{" "}
+            <button
+              onClick={() => {
+                setTodo(todos.filter((td) => td.id !== todo.id));
+              }}
+            >
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
