@@ -1,11 +1,12 @@
 import { useState } from "react";
-import AddToDo from "./AddTodoList";
+import List from "./List";
 
 let nextId = 0;
-export default function List() {
+export default function App() {
   const [todosLists, setTodosLists] = useState([]);
+  const [title, setTitle] = useState("");
 
-  function handelAddList(title) {
+  function handelAddTodo() {
     setTodosLists([
       ...todosLists,
       {
@@ -14,6 +15,7 @@ export default function List() {
         done: false,
       },
     ]);
+    setTitle("");
   }
 
   return (
@@ -21,11 +23,13 @@ export default function List() {
       <div className="container">
         <div className="list">
           <h1>Todo List</h1>
-          <AddToDo
-            todos={todosLists}
-            setTodo={setTodosLists}
-            onAddTodo={handelAddList}
-          />
+          <input
+            placeholder="Add todo list"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />{" "}
+          <button onClick={handelAddTodo}>Add</button>
+          <List todos={todosLists} setTodo={setTodosLists} />
         </div>
       </div>
     </>
